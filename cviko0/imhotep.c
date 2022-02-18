@@ -3,6 +3,7 @@
 #import <stdlib.h>
 
 int combinations[176851][100];
+int path[100][100];
 long B = 0;
 
 int findMinimalPath(long maxCombinations, int rows, int cols, int arr[rows][cols]){
@@ -76,6 +77,44 @@ void comb(int arr[], int n, int r){
     combUtil(chosen,arr,0,r,0,n-1);
 }
 
+int greedy(int rows, int cols,int arr[rows][cols]){
+    int i,j;
+    int sucet =0;
+    int min, minj;
+    
+    for(i = 0; i< rows; i++){
+        min =999999999;
+        for(j = 0; j<cols; j++){
+            if(abs(sucet+arr[i][j])<abs(sucet + min)){
+                min = arr[i][j];
+                minj=j;
+            }                
+        }
+        path[i][0]=minj;
+        path[i][1]=sucet;
+        sucet = sucet + min;
+    }
+
+    for(i = 0; i < rows; i++){
+        for(j=0;j<cols;j++){
+            if(j==path[i][0]){    
+                printf("\033[1;31m");
+                printf("%d ",arr[i][j]);
+                printf("\033[0m");
+            }
+            else{
+                printf("%d ",arr[i][j]);
+
+            }   
+        }
+        printf("  sucet   %d ",path[i][1]);
+
+        printf("\n");
+    }
+    
+    return sucet;
+}
+
 
 int main(int argc, const char * argv[]){
     FILE *fP;
@@ -87,7 +126,7 @@ int main(int argc, const char * argv[]){
     fscanf(fP,"%d",&rows);
     fscanf(fP,"%d",&cols);
     int a[rows][cols]; 
-
+    
     int i,j;
     for (i = 0; i < rows; ++i) {
         for (j = 0; j < cols; ++j) {
@@ -98,13 +137,14 @@ int main(int argc, const char * argv[]){
    
     fclose(fP);
     
+    int c = greedy(rows,cols,a);
+    printf("minimum je %d \n",c);
+    // int arr[] = {0,1,2,3};
+    // int n = 4;
+    // int r = 100;
+    // comb(arr,n,r);
     
-    int arr[] = {0,1,2,3};
-    int n = 4;
-    int r = 100;
-    comb(arr,n,r);
-    
-    int x = findMinimalPath(B,rows,cols,a);
+    // int x = findMinimalPath(B,rows,cols,a);
     
     return 0;
 }
