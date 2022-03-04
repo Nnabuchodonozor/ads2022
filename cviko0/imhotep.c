@@ -130,7 +130,7 @@ int main(int argc, const char * argv[]){
     int i,j;
     for (i = 0; i < rows; ++i) {
         for (j = 0; j < cols; ++j) {
-        fscanf(fP, "%d, ", &a[i][j]);
+        fscanf(fP, "%d ", &a[i][j]);
         }
     }
     int sucet =0;
